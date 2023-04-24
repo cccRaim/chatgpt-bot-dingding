@@ -31,6 +31,10 @@ class ChatgptHandler(tornado.web.RequestHandler):
             request_data = self.request.body
             data = json.loads(request_data)
             prompt = data['text']['content']
+            if "/clearall" in prompt:
+                self.clear_all_context(data)
+                self.notify_dingding('已清空全部用户上下文')
+                return self.write_json({"ret": 200})
             if "/clear" in prompt:
                 self.clear_context(data)
                 self.notify_dingding('已清空上下文')
@@ -88,6 +92,9 @@ class ChatgptHandler(tornado.web.RequestHandler):
     def clear_context(self, data):
         store_key = self.get_context_key(data)
         global_dict[store_key] = []
+
+    def clear_all_context(self):
+        global_dict.clear()
 
     def write_json(self, struct):
         self.set_header("Content-Type", "application/json; charset=UTF-8")
