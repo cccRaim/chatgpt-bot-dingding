@@ -32,7 +32,7 @@ class ChatgptHandler(tornado.web.RequestHandler):
             data = json.loads(request_data)
             prompt = data['text']['content']
             if "/clearall" in prompt:
-                self.clear_all_context(data)
+                self.clear_all_context()
                 self.notify_dingding('已清空全部用户上下文')
                 return self.write_json({"ret": 200})
             if "/clear" in prompt:
