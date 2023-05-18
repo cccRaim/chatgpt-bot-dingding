@@ -3,7 +3,7 @@
 import asyncio
 import tornado
 from util.route import route
-
+import app
 
 class Application(tornado.web.Application):
     def __init__(self):
