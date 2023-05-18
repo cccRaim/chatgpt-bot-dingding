@@ -29,6 +29,7 @@ class ChatgptHandler(tornado.web.RequestHandler):
     def post(self):
         try:
             request_data = self.request.body
+            logger.info(f"dingding request: {request_data}")
             data = json.loads(request_data)
             prompt = data['text']['content']
             if "/clearall" in prompt:
